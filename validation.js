@@ -1,20 +1,15 @@
-
+/*############ Variables ############*/
 const email = document.getElementById("email");
-const emailError = document.querySelector("#email + span.error"); 
-let pass = document.getElementById("password-in");
-let confirma = document.getElementById("password-confirm");
-//let errorSpan = document.getElementById("passwordSpan");
-let button = document.getElementById("createAccount");
+const emailError = document.querySelector("#email + span.error");
 
+const password = document.getElementById("password");
+const passwordError = document.querySelector("#password + span.error");
+const passwordConfirm = document.getElementById("passwordConfirm");
+const passwordConfirmError = document.querySelector("#passwordConfirm + span.error");
 
-/* confirma.addEventListener("input",()=>{
-    if(pass.value == confirma.value){
-        errorSpan.classList.add("hidden");
-    }else{
-        errorSpan.classList.remove("hidden");
-    }
-}) */
+const createAccountBtn = document.getElementById("createAccount");
 
+/*############ Event listeners ############*/
 email.addEventListener("input", (e)=>{
     if(email.validity.valid){
         emailError.textContent = "";
@@ -26,6 +21,30 @@ email.addEventListener("input", (e)=>{
     }
 })
 
+password.addEventListener("input", (e)=>{
+    if(password.validity.valid){
+        passwordError.textContent = "";
+        passwordError.className = "error";
+        password.classList.remove("invalid");
+    }else{
+        showPasswordError();
+        password.classList.add("invalid");
+    }
+})
+
+passwordConfirm.addEventListener("change",()=>{
+    if(password.value == passwordConfirm.value){
+        passwordConfirmError.textContent="";
+        passwordConfirmError.className = "error";
+        passwordConfirm.classList.remove("invalid");
+    }else{
+        passwordConfirmError.textContent = "Passwords not matching";
+        passwordConfirmError.className = "error active";
+        passwordConfirm.classList.add("invalid");
+    }
+})
+
+/*############ Functions ############*/
 function showEmailError(){
     if(email.validity.valueMissing){
         emailError.textContent = "You need to enter an email address";
@@ -37,5 +56,15 @@ function showEmailError(){
         emailError.textContent = "This email is too long!";
     }
     emailError.className = "error active";
+}
 
+function showPasswordError(){
+    if(password.validity.valueMissing){
+        passwordError.textContent = "You need to enter a password with at least 8 characters, one digit, one capitalize letter, and one special character";
+    }else if(password.validity.typeMismatch){
+        passwordError.textContent = "You need to enter a valid password";
+    }else if(password.validity.tooShort){
+        passwordError.textContent = "The password is too short!";
+    }
+    passwordError.className = "error active";
 }

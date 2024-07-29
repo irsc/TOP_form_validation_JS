@@ -29,13 +29,15 @@
             </div>
             
             <div class="field">
-                <label for="password-in">Password: </label>
-                <input type="password" required pattern="^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$">
+                <label for="password">Password: </label>
+                <input id="password" type="password" required pattern="^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$">
+                <span class="error" aria-live="polite"></span>
             </div>
             
             <div class="field">
-                <label for="password-confirm">Confirm password: </label>
-                <input type="password" required pattern="^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$">
+                <label for="passwordConfirm">Confirm password: </label>
+                <input id="passwordConfirm" type="password" required pattern="^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$">
+                <span class="error" aria-live="polite"></span>
             </div>
             <div class="divButtons">
                 <button type="reset">Reset</button>
