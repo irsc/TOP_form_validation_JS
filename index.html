@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Document</title>
+</head>
+<body>
+    <div class="container">
+        <form class="form" novalidate>
+            <legend>
+                <h2>Create an account</h2>
+            </legend>
+            <div class="field">
+                <label for="email">Email: </label>
+                <input id="email" type="email" required minlength="6" maxlength="30">
+                <span class="error" aria-live="polite"></span>
+            </div>
+            <div class="field">
+                <label for="country">Country: </label>
+                <input id="country" type="text" required pattern="[A-zÀ-ú\s]{2,30}">
+            </div>
+            
+            <div class="field">
+                <label for="zip">ZIP Code: </label>
+                <input type="text" required minlength="4" maxlength="12">
+            </div>
+            
+            <div class="field">
+                <label for="password-in">Password: </label>
+                <input type="password" required pattern="^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$">
+            </div>
+            
+            <div class="field">
+                <label for="password-confirm">Confirm password: </label>
+                <input type="password" required pattern="^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$">
+            </div>
+            <div class="divButtons">
+                <button type="reset">Reset</button>
+                <button type="submit" id="createAccount">Let's go!</button>
+            </div>
+            
+        </form>
+    </div>
+    
+</body>
+<script src="./validation.js"></script>
+</html>
