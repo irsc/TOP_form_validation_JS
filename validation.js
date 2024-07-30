@@ -1,13 +1,38 @@
 /*############ Variables ############*/
 const email = document.getElementById("email");
 const emailError = document.querySelector("#email + span.error");
-
+const zip = document.getElementById("zip");
+const country = document.getElementById("country");
+const zipError = document.querySelector("#zip + span.error");
 const password = document.getElementById("password");
 const passwordError = document.querySelector("#password + span.error");
 const passwordConfirm = document.getElementById("passwordConfirm");
 const passwordConfirmError = document.querySelector("#passwordConfirm + span.error");
-
 const createAccountBtn = document.getElementById("createAccount");
+
+// following  https://developer.mozilla.org/en-US/docs/Web/HTML/Constraint_validation
+const zipConstraints = {
+    es: [
+        "^(E-)?\\d{5}$",
+        "Spain ZIPs must have exactly 5 digits: e.g. E-13001 or 13001",
+      ],
+    ch: [
+      "^(CH-)?\\d{4}$",
+      "Switzerland ZIPs must have exactly 4 digits: e.g. CH-1950 or 1950",
+    ],
+    fr: [
+      "^(F-)?\\d{5}$",
+      "France ZIPs must have exactly 5 digits: e.g. F-75012 or 75012",
+    ],
+    de: [
+      "^(D-)?\\d{5}$",
+      "Germany ZIPs must have exactly 5 digits: e.g. D-12345 or 12345",
+    ],
+    nl: [
+      "^(NL-)?\\d{4}\\s*([A-RT-Z][A-Z]|S[BCE-RT-Z])$",
+      "Netherland ZIPs must have exactly 4 digits, followed by 2 letters except SA, SD and SS",
+    ],
+  };
 
 /*############ Event listeners ############*/
 email.addEventListener("input", (e)=>{
@@ -18,6 +43,17 @@ email.addEventListener("input", (e)=>{
     }else{
         showEmailError();
         email.classList.add("invalid");
+    }
+})
+
+zip.addEventListener("input", (e)=>{
+    if(checkZIP()){
+        zipError.textContent = "";
+        zipError.className = "error";
+        zip.classList.remove("invalid");
+    }else{
+        showZipError();
+        zip.classList.add("invalid");
     }
 })
 
@@ -33,14 +69,13 @@ password.addEventListener("input", (e)=>{
 })
 
 passwordConfirm.addEventListener("change",()=>{
-    if(password.value == passwordConfirm.value){
-        passwordConfirmError.textContent="";
-        passwordConfirmError.className = "error";
-        passwordConfirm.classList.remove("invalid");
-    }else{
-        passwordConfirmError.textContent = "Passwords not matching";
-        passwordConfirmError.className = "error active";
-        passwordConfirm.classList.add("invalid");
+    checkPasswords();
+})
+
+createAccountBtn.addEventListener("click", (e)=>{
+    e.preventDefault();
+    if(email.validity.valid && password.validity.valid && checkPasswords()){
+        alert("All good to go!");
     }
 })
 
@@ -58,13 +93,35 @@ function showEmailError(){
     emailError.className = "error active";
 }
 
+function showZipError(){
+    zipError.textContent = zipConstraints[country.value][1];
+    zipError.className = "error active";
+}
+
 function showPasswordError(){
-    if(password.validity.valueMissing){
+    console.log(password.validity);
+    if(password.validity.patternMismatch){
         passwordError.textContent = "You need to enter a password with at least 8 characters, one digit, one capitalize letter, and one special character";
-    }else if(password.validity.typeMismatch){
-        passwordError.textContent = "You need to enter a valid password";
-    }else if(password.validity.tooShort){
-        passwordError.textContent = "The password is too short!";
     }
     passwordError.className = "error active";
 }
+
+function checkPasswords(){
+    if(password.value == passwordConfirm.value){
+        passwordConfirmError.textContent="";
+        passwordConfirmError.className = "error";
+        passwordConfirm.classList.remove("invalid");
+        return true;
+    }else{
+        passwordConfirmError.textContent = "Passwords not matching";
+        passwordConfirmError.className = "error active";
+        passwordConfirm.classList.add("invalid");
+        return false;
+    }
+}
+
+function checkZIP() {
+    const constraint = new RegExp(zipConstraints[country.value][0], "");
+    return constraint.test(zip.value);
+}
+ 

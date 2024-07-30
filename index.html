@@ -20,12 +20,19 @@
             </div>
             <div class="field">
                 <label for="country">Country: </label>
-                <input id="country" type="text" required pattern="[A-zÀ-ú\s]{2,30}">
+                <select id="country">
+                    <option value="es">España</option>
+                    <option value="fr">France</option>
+                    <option value="de">Deutschland</option>
+                    <option value="nl">The Netherlands</option>
+                    <option value="ch">Switzerland</option>
+                  </select>
             </div>
             
             <div class="field">
                 <label for="zip">ZIP Code: </label>
-                <input type="text" required minlength="4" maxlength="12">
+                <input id ="zip" type="text" required>
+                <span class="error" aria-live="polite"></span>
             </div>
             
             <div class="field">
